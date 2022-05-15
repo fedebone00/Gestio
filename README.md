@@ -1,2 +1,2 @@
-# IS_Gestio
+# Gestio
 Project repository for the Ingegneria del Software course of University of Trento
