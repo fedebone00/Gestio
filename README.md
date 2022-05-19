@@ -1,3 +1,6 @@
+# IS_Gestio
+Project repository for the Ingegneria del Software course of University of Trento
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 To clone this repo, you have to install npm next before 
