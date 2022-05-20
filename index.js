@@ -1,5 +1,6 @@
 import { mongoose } from 'mongoose'
 import app from './app/app.mjs'
+import './routers/user.mjs'
 import './routers/menu.mjs'
 import './routers/prenotamensa.mjs'
 import './routers/malattia.mjs'
