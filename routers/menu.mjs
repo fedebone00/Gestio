@@ -8,11 +8,17 @@ app.get('/menu', isAuthenticated, isAuthorized, (req,res) =>{
     Menu.find().then((menu) => res.send(menu))
 });
 
-app.post('/menu', isAuthenticated, isAuthorized, check('data').notEmpty().isDate(new Date()),check('primo').notEmpty(), check('secondo').notEmpty() ,(req,res) => {
+app.post('/menu', isAuthenticated, isAuthorized, async (req,res) => {
     let errors = validationResult(req)
     if(!errors.isEmpty()){
         return res.status(400).json({errors: errors.array()})
     }
+
+    let date =  await Menu.findOne({data: req.body.data});
+    if (date){
+        return res.status(401).send('Menu for this day already exist');
+    }
+
     let m = new Menu({data: req.body['data'],primo: req.body['primo'], secondo: req.body['secondo'], dolce: req.body['dolce']});
     m.save()
         .then(() => res.status(201).send('Succesfully add menu'))

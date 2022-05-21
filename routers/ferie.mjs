@@ -7,15 +7,15 @@ app.get('/ferie', isAuthenticated, isAuthorized, (req,res) =>{
     Ferie.find().then((ferie) => res.send(ferie))
 });
 
-app.post('/ferie', isAuthenticated, isAuthorized, check('dataInizio').notEmpty().isDate(new Date()),check('dataFine').notEmpty().isDate(new Date()), check('motivazione').notEmpty() ,(req,res) => {
+app.post('/ferie', isAuthenticated, isAuthorized, (req,res) => {
     let errors = validationResult(req)
     if(!errors.isEmpty()){
         return res.status(400).json({errors: errors.array()})
     }
     let ferie = new Ferie({dataInizio: req.body['dataInizio'],dataFine: req.body['dataFine'], motivazione: req.body['motivazione']});
     ferie.save()
-        .then(() => res.status(201).send(`Succesfully save ${req.body.id}`))
-        .catch(() => res.status(500).send(`Error saving ${req.body.id}`));
+        .then(() => res.status(201).send(`Succesfully save ${req.body.dataInizio}`))
+        .catch(() => res.status(500).send(`Error saving ${req.body.dataInizio}`));
 });
 
 app.delete('/ferie/:id', isAuthenticated, isAuthorized, check('id').notEmpty(), (req,res) => {

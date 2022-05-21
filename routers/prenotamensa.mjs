@@ -7,7 +7,7 @@ app.get('/prenotamensa', isAuthenticated, isAuthorized, (req,res) => {
     PrenotaMensa.find().then((prenotamensa) => res.send(prenotamensa));
 });
 
-app.post('/prenotamensa', isAuthenticated, isAuthorized, check('prenotazione').notEmpty().isBoolean(),check('id').notEmpty(),(req, res) => {
+app.post('/prenotamensa', isAuthenticated, isAuthorized, (req, res) => {
     let errors = validationResult(req);
     if(!errors.isEmpty()){
         return res.status(400).json({errors: errors.array()})

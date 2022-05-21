@@ -9,9 +9,7 @@ app.get('/malattia', isAuthenticated, isAuthorized, (req, res) => {
     Malattia.find().then((malattia) => res.send(malattia));
 });
 
-app.post('/malattia', isAuthenticated, isAuthorized, uploadStorage.single('certificato'), check('data').notEmpty().isDate(new Date()), (req, res) => {
-    console.log(`[POST]`)
-    console.log(req.file);
+app.post('/malattia', isAuthenticated, isAuthorized, uploadStorage.single('certificato'), (req, res) => {
     let errors = validationResult(req)
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() })
