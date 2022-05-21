@@ -8,7 +8,7 @@ app.get('/users', isAuthenticated, isAuthorized, (req, res) => {
     User.find().select(['-password_hash', '-salt']).then((users) => res.send(users));
 });
 
-app.post('/users', isAuthenticated, isAuthorized, body('email').isEmail(), body('password').isLength({min: 8}), async (req, res) => {
+app.post('/users', isAuthenticated, isAuthorized, body('email').isEmail(), body('password').isLength({min: 8}), body('role').notEmpty().isIn(['AA', 'DIP0', 'DIP1']), async (req, res) => {
     let errors = validationResult(req);
     if(!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -32,11 +32,11 @@ app.delete('/users/:id', isAuthenticated, isAuthorized, (req, res) => {
         .then(() => res.status(201).send(`Successfully remove id ${req.params.id}`))
         .catch(() => res.status(500).send('Error deleting user'));
 });
-
-app.put('/users/:id', isAuthenticated, isAuthorized, async (req, res) => {
+app.put('/users/:id', isAuthenticated, isAuthorized, body('email').isEmail(), body('role').notEmpty().isIn(['AA', 'DIP0', 'DIP1']), async (req, res) => {
     let user = await User.findById(req.params.id);
     if(user) {
-        user.email = req.body['email'];
+        user.email = req.body['email'] || user.email;
+        user.role = req.body['role'] || user.role;
         user.save()
             .then(() => res.status(201).send("Successfully modified user"))
             .catch(() => res.status(500).send('Error modifiyng user'));

@@ -21,7 +21,8 @@ app.post('/login', body('email').isEmail(), async (req, res) => {
 });
 
 app.post('/refresh', async (req, res) => {
-    if(req.body['rt'] && req.body['jwt']) {
+    let token = req.body.token || req.query.token || req.headers['x-access-token'];
+    if(req.body['rt'] && token) {
         try{
             var refresh_payload = jwt.verify(req.body['rt'], 'test');
         } catch(error) {
@@ -29,7 +30,7 @@ app.post('/refresh', async (req, res) => {
         }
 
         try {
-            var jwt_payload = jwt.decode(req.body['jwt'], 'test');
+            var jwt_payload = jwt.decode(token, 'test');
         } catch(error) {
             return res.status(401).send('Error decoding jwt');
         }
