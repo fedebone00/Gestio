@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 
 const isAuthenticated = (req, res, next) => {
-    if(req.body['jwt']) {
+    let token = req.body.token || req.query.token || req.headers['x-access-token'];
+    if(token) {
         try {
-            let payload = jwt.verify(req.body['jwt'], 'test');
-            req.body['role'] = payload.role;
+            let payload = jwt.verify(token, 'test');
         } catch(error) {
             res.status(400).json({error: error});
             return;
