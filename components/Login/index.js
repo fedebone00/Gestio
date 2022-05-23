@@ -19,7 +19,7 @@ module.exports = function LoginForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-console.log("ENTRATO!!")
+    
     try {
       setIsLoading(true);
       const qs = require("qs");
@@ -34,19 +34,9 @@ console.log("ENTRATO!!")
         },
       }).then(function (response) {
         let token = response.data;
-        //console.log(response.data);
-        
 
-        //cookieCutter.get('myCookieName')
-        //cookieCutter.set('jwt', token.jwt);
-        //cookieCutter.set('rt', token.rt);
         sessionStorage.setItem("jwt", token.jwt);
         sessionStorage.setItem("rt", token.rt);
-
-        // console.log("JWT-->", cookieCutter.get('jwt'));
-        //console.log("RT-->", cookieCutter.get('rt'));
-
-        // localStorage.setItem('Token', JSON.stringify(token));
 
         if (parseJwt(token.jwt).role == "AA") {
           console.log("Entrato nella condizione AA");
@@ -60,11 +50,9 @@ console.log("ENTRATO!!")
           console.log("Entrato nella condizione DIP");
           Router.push("/areaDipendente");
         }
-
-        //console.log("TOKEN-->",token.jwt)
-        //console.log("REFRESH-->",token.rt)
       });
     } catch (error) {
+      console.log("ENTRATO!!");
       console.log(error);
     } finally {
       setIsLoading(false);
