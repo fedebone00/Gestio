@@ -1,6 +1,8 @@
 const SidebarAA = require("../components/sidebarAA");
 const SidebarDIP = require("../components/sidebarAA");
 const TopBar = require("../components/topBar");
+const { useState, useEffect } = require("react");
+const Image = require("next/image");
 
 function parseJwt(token) {
   if (!token) {
@@ -11,7 +13,7 @@ function parseJwt(token) {
   return JSON.parse(window.atob(base64));
 }
 
-module.exports = function aggiungiDipendente() {
+module.exports = function areaAmministratoreAziendale() {
   const [jwt, setJwt] = useState("");
   const [rt, setRt] = useState("");
   const [set, setSet] = useState(1);
@@ -46,7 +48,12 @@ module.exports = function aggiungiDipendente() {
     } else {
       return (
         <div>
-          <Error/>
+          <Image
+            layout="fill"
+            className="object-center object-cover pointer-events-none"
+            src="/../public/404.png"
+            alt="title"
+          />
         </div>
       );
     }
