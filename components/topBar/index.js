@@ -1,18 +1,16 @@
-
-import {
+const {
   MdSearch,
   MdMenu,
   MdOutlineFace,
   MdChevronRight,
-} from "react-icons/md";
-import { BsBellFill } from "react-icons/bs";
-import { Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import Router from "next/router";
+}  = require("react-icons/md");
+const {Menu, Transition } = require("@headlessui/react");
+const { BsBellFill } = require( "react-icons/bs");
+const { Fragment } = require( "react");
+const Router = require ( "next/router");
 
 
-
-export function TopBar({ title }) {
+module.exports = function TopBar({ title }) {
 
 
   async function clearSession(e) {
@@ -90,5 +88,3 @@ export function TopBar({ title }) {
     </div>
   );
 }
-
-export default TopBar;
