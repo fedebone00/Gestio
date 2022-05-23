@@ -1,11 +1,99 @@
-const SidebarAA = require("../components/sidebarAA");
-const SidebarDIP = require("../components/sidebarAA");
-const TopBar = require("../components/topBar");
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
+import Link from "next/link";
+import home from "../public/home-outline.png";
+import React, { Component, useEffect, useState } from "react";
+import { SidebarAA } from "../components/sidebarAA";
+import { TopBar } from "../components/topBar";
+import { Listbox } from "@headlessui/react";
 
-module.exports =  function aggiungiDipendente() {
+const people = [
+  { id: 1, name: "DIP0", unavailable: false },
+  { id: 2, name: "DIP1", unavailable: false },
+];
 
+function parseJwt(token) {
+  if (!token) {
+    return;
+  }
+  const base64Url = token.split(".")[1];
+  const base64 = base64Url.replace("-", "+").replace("_", "/");
+  return JSON.parse(window.atob(base64));
+}
+
+export default function aggiungiDipendente() {
+  const [email, setUsername] = useState("");
+  const [role, setRole] = useState("");
+  const [jwt, setJwt] = useState("");
+  const [rt, setRt] = useState("");
+  const [set, setSet] = useState(1);
+  const [base, setBase] = useState("http://localhost:8080/users");
+  const [slash, setSlash] = useState("/");
+  const [id, setId] = useState("");
+  const [error, setError] = useState(false);
+  const [token, setToken] = useState("");
+  const [password, setPassword] = useState('password');
+
+  async function handleAdd(e) {
+    e.preventDefault();
+    try {
+      const qs = require("qs");
+      const axios = require("axios");
+
+      axios({
+        method: "POST",
+        url: "http://localhost:8080/users",
+        headers: {
+          'x-access-token' : jwt,
+        },
+        data: {
+          email,
+          role,
+          password,
+        },
+      }).then(function (response) {
+        let token = response.data;
+        console.log(response.data);
+
+        localStorage.setItem("Token", JSON.stringify(token));
+
+      });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      
+    }
+
+    //console.log("email:", email);
+    //console.log("Password: ", password)
+  }
+
+  useEffect(() => {
+    setTimeout(() => {
+      setJwt(sessionStorage.getItem("jwt"));
+      setRt(sessionStorage.getItem("rt"));
+      console.log("JWT-->", jwt);
+      setSet(0);
+    }, 50);
+  }, []);
+
+  if (set) {
+    return <div></div>;
+  } else {
+    console.log("JWT-->", jwt);
+
+    if (jwt == undefined) {
       return (
-                <div>
+        <div>
+          <h1>Devi prima effettuare il login!</h1>
+          <a href="/">Vai alla pagina di login</a>
+        </div>
+      );
+    } else if (parseJwt(jwt).role == "AA") {
+      //delete sessionStorage.jwt;
+      return (
+        <div>
           <SidebarAA />
           <TopBar />
           <form onSubmit={handleAdd}>
@@ -42,4 +130,6 @@ module.exports =  function aggiungiDipendente() {
           <h1>ERROR!!</h1>
         </div>
       );
+    }
+  }
 }
