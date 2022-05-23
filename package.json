@@ -1,19 +1,31 @@
 {
   "name": "gestio",
-  "version": "1.0.0",
-  "description": "Project repository for the Ingegneria del Software course of University of Trento",
-  "main": "index.js",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/fedebone00/Gestio.git"
+  "dependencies": {
+    "@headlessui/react": "^1.6.1",
+    "@react-icons/all-files": "^4.1.0",
+    "axios": "^0.27.2",
+    "cookie-cutter": "^0.2.0",
+    "jwt-decode": "^3.1.2",
+    "next": "^12.1.6",
+    "qs": "^6.10.3",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-icons": "^4.3.1",
+    "sassy-datepicker": "^0.8.0"
   },
-  "author": "Carlo Bottaro, Lorenzo Canciani, Federico Carbone, Giovanni Lunardi",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/fedebone00/Gestio/issues"
-  },
-  "homepage": "https://github.com/fedebone00/Gestio#readme"
+  "devDependencies": {
+    "autoprefixer": "^10.4.7",
+    "eslint": "8.15.0",
+    "eslint-config-next": "12.1.6",
+    "postcss": "^8.4.13",
+    "tailwindcss": "^3.0.24"
+  }
 }
